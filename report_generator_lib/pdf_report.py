@@ -4,7 +4,9 @@ def add(a, b):
     """Return the sum of two numbers."""
     return a + b
 
-def freecad_assistant_pdf_report():
+# Takes in a formatted dict to generate a FreeCAD assistant PDF report.
+# <Insert link to markdown that defined the dict format>
+def freecad_assistant_pdf_report(freecad_report_dict):
     # Create instance of FPDF class
     pdf = FPDF()
 
