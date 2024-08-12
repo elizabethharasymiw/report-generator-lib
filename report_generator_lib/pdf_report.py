@@ -94,5 +94,8 @@ def freecad_assistant_pdf_report(freecad_report_dict):
             pdf.cell(col_width, row_height, item, border=1, align='L')
         pdf.ln(row_height)
 
+    # Add Owl mascot
+    pdf.image("./tests/test-images/owl-2.png", x=10, y=240, w=20)
+
     # Save the PDF with name .pdf
     pdf.output("example.pdf")
