@@ -6,3 +6,6 @@ build/
 
 # Ignore egg info files from package installs
 *.egg-info/
+
+# Ignore the projects python virtual environment
+testing-env/
