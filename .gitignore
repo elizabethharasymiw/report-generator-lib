@@ -1,2 +1,5 @@
 # Ignore macOS folder metadata file
 .DS_Store
+
+# Ignore generated build folder
+build/
