@@ -97,5 +97,12 @@ def freecad_assistant_pdf_report(freecad_report_dict):
     # Add Owl mascot
     pdf.image("./tests/test-images/owl-2.png", x=10, y=240, w=20)
 
+    # Footer Text
+    pdf.ln(50)
+
+    pdf.set_font("Arial", style='', size=8.5)
+    pdf.cell(200, 6, txt="This report was auto-generated with the FreeCAD Beginner Assistant.", ln=True, align='L')
+    pdf.cell(200, 6, txt="Do you like getting automatic feedback while working with FreeCAD? Help us improve the project.", ln=True, align='L')
+
     # Save the PDF with name .pdf
     pdf.output("example.pdf")
