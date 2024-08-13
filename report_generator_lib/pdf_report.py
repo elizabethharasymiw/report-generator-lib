@@ -44,21 +44,29 @@ def freecad_assistant_pdf_report(freecad_report_dict):
     # Define the hardcoded dictionary
     data = {
         "Column 1": "Row 1, Data 1",
-        "Column 2": "Row 1, Data 2",
-        "Column 3": "Row 1, Data 3",
-        "Column 4": "Row 1, Data 4",
         "Column 1": "Row 2, Data 1",
-        "Column 2": "Row 2, Data 2",
-        "Column 3": "Row 2, Data 3",
-        "Column 4": "Row 2, Data 4",
         "Column 1": "Row 3, Data 1",
-        "Column 2": "Row 3, Data 2",
-        "Column 3": "Row 3, Data 3",
-        "Column 4": "Row 3, Data 4",
         "Column 1": "Row 4, Data 1",
+
+        "Column 2": "Row 1, Data 2",
+        "Column 2": "Row 2, Data 2",
+        "Column 2": "Row 3, Data 2",
         "Column 2": "Row 4, Data 2",
+
+        "Column 3": "Row 1, Data 3",
+        "Column 3": "Row 2, Data 3",
+        "Column 3": "Row 3, Data 3",
         "Column 3": "Row 4, Data 3",
-        "Column 4": "Row 4, Data 4"
+
+        "Column 4": "Row 1, Data 4",
+        "Column 4": "Row 2, Data 4",
+        "Column 4": "Row 3, Data 4",
+        "Column 4": "Row 4, Data 4",
+
+        "Column 5": "Row 1, Data 5",
+        "Column 5": "Row 2, Data 5",
+        "Column 5": "Row 3, Data 5",
+        "Column 5": "Row 4, Data 5"
     }
 
     # Define table header colors and set font
@@ -67,11 +75,11 @@ def freecad_assistant_pdf_report(freecad_report_dict):
     pdf.set_font("Arial", style='B', size=12)
 
     # Define column width and height
-    col_width = pdf.w / 4.5  # Adjusting the column width
+    col_width = pdf.w / 5.5  # Adjusting the column width
     row_height = 10
 
     # Add table header (using keys from the first item)
-    headers = ["Column 1", "Column 2", "Column 3", "Column 4"]
+    headers = ["Column 1", "Column 2", "Column 3", "Column 4", "Column 5"]
     for header in headers:
         pdf.cell(col_width, row_height, header, border=1, align='C', fill=True)
     pdf.ln(row_height)
@@ -82,10 +90,10 @@ def freecad_assistant_pdf_report(freecad_report_dict):
 
     # Define the data for the table
     rows = [
-        ["Row 1, Data 1", "Row 1, Data 2", "Row 1, Data 3", "Row 1, Data 4"],
-        ["Row 2, Data 1", "Row 2, Data 2", "Row 2, Data 3", "Row 2, Data 4"],
-        ["Row 3, Data 1", "Row 3, Data 2", "Row 3, Data 3", "Row 3, Data 4"],
-        ["Row 4, Data 1", "Row 4, Data 2", "Row 4, Data 3", "Row 4, Data 4"]
+        ["R 1, D 1", "R 1, D 2", "R 1, D 3", "R 1, D 4", "R 1, D 5"],
+        ["R 2, D 1", "R 2, D 2", "R 2, D 3", "R 2, D 4", "R 2, D 5"],
+        ["R 3, D 1", "R 3, D 2", "R 3, D 3", "R 3, D 4", "R 3, D 5"],
+        ["R 4, D 1", "R 4, D 2", "R 4, D 3", "R 4, D 4", "R 4, D 5"]
     ]
 
     # Add table rows
