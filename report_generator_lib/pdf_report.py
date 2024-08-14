@@ -78,8 +78,8 @@ def freecad_assistant_pdf_report(freecad_report_dict):
     num_cols = 5;
     col_width = pdf.w / ( num_cols + .5)
     id_col_width = col_width / 4
-    status_col_width = col_width / 3
-    text_col_width = col_width + (id_col_width/3) + (status_col_width/3)
+    status_col_width = col_width / 2
+    text_col_width = col_width + (id_col_width/2) + (status_col_width/2)
     row_height = 10
 
     # Add table header (using keys from the first item)
@@ -89,7 +89,7 @@ def freecad_assistant_pdf_report(freecad_report_dict):
         if(header == "ID"):
             col_new_width = id_col_width
         if(header == "Status"):
-            col_new_wdith = status_col_width
+            col_new_width = status_col_width
         pdf.cell(col_new_width, row_height, header, border=1, align='C', fill=True)
     pdf.ln(row_height)
 
@@ -113,7 +113,7 @@ def freecad_assistant_pdf_report(freecad_report_dict):
             if(i == 0):
                 col_new_width = id_col_width
             if(i == 4):
-                col_new_wdith = status_col_width
+                col_new_width = status_col_width
             pdf.cell(col_new_width, row_height, item, border=1, align='L')
             i = i + 1;
         pdf.ln(row_height)
