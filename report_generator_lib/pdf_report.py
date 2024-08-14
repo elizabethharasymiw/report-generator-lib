@@ -75,13 +75,22 @@ def freecad_assistant_pdf_report(freecad_report_dict):
     pdf.set_font("Arial", style='B', size=12)
 
     # Define column width and height
-    col_width = pdf.w / 5.5  # Adjusting the column width
+    num_cols = 5;
+    col_width = pdf.w / ( num_cols + .5)
+    id_col_width = col_width / 4
+    status_col_width = col_width / 3
+    text_col_width = col_width + (id_col_width/3) + (status_col_width/3)
     row_height = 10
 
     # Add table header (using keys from the first item)
-    headers = ["Column 1", "Column 2", "Column 3", "Column 4", "Column 5"]
+    headers = ["ID", "Text 1", "Text 2", "Text 3", "Status"]
     for header in headers:
-        pdf.cell(col_width, row_height, header, border=1, align='C', fill=True)
+        col_new_width = text_col_width
+        if(header == "ID"):
+            col_new_width = id_col_width
+        if(header == "Status"):
+            col_new_wdith = status_col_width
+        pdf.cell(col_new_width, row_height, header, border=1, align='C', fill=True)
     pdf.ln(row_height)
 
     # Reset font and text color for table body
@@ -90,17 +99,25 @@ def freecad_assistant_pdf_report(freecad_report_dict):
 
     # Define the data for the table
     rows = [
-        ["R 1, D 1", "R 1, D 2", "R 1, D 3", "R 1, D 4", "R 1, D 5"],
-        ["R 2, D 1", "R 2, D 2", "R 2, D 3", "R 2, D 4", "R 2, D 5"],
-        ["R 3, D 1", "R 3, D 2", "R 3, D 3", "R 3, D 4", "R 3, D 5"],
-        ["R 4, D 1", "R 4, D 2", "R 4, D 3", "R 4, D 4", "R 4, D 5"]
+        ["1", "R 1, D 2", "R 1, D 3", "R 1, D 4", "R 1, D 5"],
+        ["2", "R 2, D 2", "R 2, D 3", "R 2, D 4", "R 2, D 5"],
+        ["3", "R 3, D 2", "R 3, D 3", "R 3, D 4", "R 3, D 5"],
+        ["4", "R 4, D 2", "R 4, D 3", "R 4, D 4", "R 4, D 5"]
     ]
 
     # Add table rows
+    i = 0;
     for row in rows:
         for item in row:
-            pdf.cell(col_width, row_height, item, border=1, align='L')
+            col_new_width = text_col_width
+            if(i == 0):
+                col_new_width = id_col_width
+            if(i == 4):
+                col_new_wdith = status_col_width
+            pdf.cell(col_new_width, row_height, item, border=1, align='L')
+            i = i + 1;
         pdf.ln(row_height)
+        i = 0
 
     # Add Owl mascot
     pdf.image("./tests/test-images/owl-2.png", x=10, y=240, w=20)
