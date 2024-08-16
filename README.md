@@ -1,25 +1,19 @@
 # report_generator_lib
 Collection of functions to generate formatted reports programmatically
 
-## Python virtual environment maintenance commands
+## How to Install
 ```
-# Create python virtual environment
-python3 -m venv testing-env
-```
-```
-# Activate python virtual environment on UNIX
-source testing-env/bin/activate
-```
-```
-# Deactivate python virtual environment
-deactivate
-```
-```
-# Install required dependencies in the testing-env (activate first)
-pip install -r requirements.txt
+git clone git@github.com:elizabethharasymiw/report_generator_lib.git
+cd report_generator_lib
 pip install .
 ```
+
+## Build Scripts for project developers
 ```
-# List current python packages in this virtual environment
-pip list
+echo Run example program with lib on Linux or Mac
+./unix_run.sh
+```
+```
+echo Cleanup old build and example program runs on Linux or Mac
+./unix_clean.sh
 ```
