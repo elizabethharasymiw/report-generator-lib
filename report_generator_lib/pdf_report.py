@@ -1,3 +1,6 @@
+# 1 inch = 25.4 mm
+ONE_INCH_MARGIN_SIZE = 25.4
+
 from fpdf import FPDF
 
 def freecad_assistant_pdf_report_header(freecad_report_pdf):
@@ -137,6 +140,12 @@ def add(a, b):
 def freecad_assistant_pdf_report(freecad_report_dict):
     # Create instance of FPDF class
     pdf = FPDF()
+
+    # Set 1 inch page margins
+    pdf.set_left_margin(ONE_INCH_MARGIN_SIZE)
+    pdf.set_right_margin(ONE_INCH_MARGIN_SIZE)
+    pdf.set_top_margin(ONE_INCH_MARGIN_SIZE)
+    pdf.set_auto_page_break(auto=True, margin=ONE_INCH_MARGIN_SIZE)
 
     # Add a page
     pdf.add_page()
