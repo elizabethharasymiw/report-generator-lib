@@ -21,31 +21,7 @@ def freecad_assistant_pdf_report_summary_text(freecad_report_pdf):
     freecad_report_pdf.cell(200, 6, txt="File: test_file.FCStd", ln=True, align='L')
     return freecad_report_pdf
 
-def add(a, b):
-    """Return the sum of two numbers."""
-    return a + b
-
-# Takes in a formatted dict to generate a FreeCAD assistant PDF report.
-# <Insert link to markdown that defined the dict format>
-def freecad_assistant_pdf_report(freecad_report_dict):
-    # Create instance of FPDF class
-    pdf = FPDF()
-
-    # Add a page
-    pdf.add_page()
-
-    # Add Report Header
-    pdf = freecad_assistant_pdf_report_header(pdf)
-
-    # FreeCAD Model Image
-    pdf.image("./tests/test-images/freecad_model_test_file.png", x=10, y=20, w=200)
-
-    # Points, Rank, Date, File
-    pdf = freecad_assistant_pdf_report_summary_text(pdf)
-
-    # Table
-    pdf.ln(10)
-
+def freecad_assistant_pdf_report_table(freecad_report_pdf):
     # Define the hardcoded dictionary
     data = {
         "Column 1": "Row 1, Data 1",
@@ -75,13 +51,13 @@ def freecad_assistant_pdf_report(freecad_report_dict):
     }
 
     # Define table header colors and set font
-    pdf.set_fill_color(0, 0, 128)  # Dark blue
-    pdf.set_text_color(255, 255, 255)  # White
-    pdf.set_font("Arial", style='B', size=12)
+    freecad_report_pdf.set_fill_color(0, 0, 128)  # Dark blue
+    freecad_report_pdf.set_text_color(255, 255, 255)  # White
+    freecad_report_pdf.set_font("Arial", style='B', size=12)
 
     # Define column width and height
     num_cols = 5;
-    col_width = pdf.w / ( num_cols + .5)
+    col_width = freecad_report_pdf.w / ( num_cols + .5)
     id_col_width = col_width / 4
     status_col_width = col_width / 2
     text_col_width = col_width + (id_col_width/2) + (status_col_width/2)
@@ -95,12 +71,12 @@ def freecad_assistant_pdf_report(freecad_report_dict):
             col_new_width = id_col_width
         if(header == "Status"):
             col_new_width = status_col_width
-        pdf.cell(col_new_width, row_height, header, border=1, align='C', fill=True)
-    pdf.ln(row_height)
+        freecad_report_pdf.cell(col_new_width, row_height, header, border=1, align='C', fill=True)
+    freecad_report_pdf.ln(row_height)
 
     # Reset font and text color for table body
-    pdf.set_font("Arial", size=12, style='')
-    pdf.set_text_color(0, 0, 0)  # Black
+    freecad_report_pdf.set_font("Arial", size=12, style='')
+    freecad_report_pdf.set_text_color(0, 0, 0)  # Black
 
     # Define the data for the table
     rows = [
@@ -119,10 +95,39 @@ def freecad_assistant_pdf_report(freecad_report_dict):
                 col_new_width = id_col_width
             if(i == 4):
                 col_new_width = status_col_width
-            pdf.cell(col_new_width, row_height, item, border=1, align='L')
+            freecad_report_pdf.cell(col_new_width, row_height, item, border=1, align='L')
             i = i + 1;
-        pdf.ln(row_height)
+        freecad_report_pdf.ln(row_height)
         i = 0
+    return freecad_report_pdf
+
+def add(a, b):
+    """Return the sum of two numbers."""
+    return a + b
+
+# Takes in a formatted dict to generate a FreeCAD assistant PDF report.
+# <Insert link to markdown that defined the dict format>
+def freecad_assistant_pdf_report(freecad_report_dict):
+    # Create instance of FPDF class
+    pdf = FPDF()
+
+    # Add a page
+    pdf.add_page()
+
+    # Add Report Header
+    pdf = freecad_assistant_pdf_report_header(pdf)
+
+    # FreeCAD Model Image
+    pdf.image("./tests/test-images/freecad_model_test_file.png", x=10, y=20, w=200)
+
+    # Points, Rank, Date, File
+    pdf = freecad_assistant_pdf_report_summary_text(pdf)
+
+    # Table
+    pdf = freecad_assistant_pdf_report_table(pdf)
+
+    # Add Space
+    pdf.ln(10)
 
     # Add Owl mascot
     pdf.image("./tests/test-images/owl-2.png", x=10, y=240, w=20)
