@@ -100,6 +100,34 @@ def freecad_assistant_pdf_report_table(freecad_report_pdf):
         i = 0
     return freecad_report_pdf
 
+def freecad_assistant_pdf_report_footer(freecad_report_pdf):
+    # Add Owl mascot
+    freecad_report_pdf.image("./tests/test-images/owl-2.png", x=10, y=240, w=20)
+
+    # Add Space
+    freecad_report_pdf.ln(50)
+
+    freecad_report_pdf.set_font("Arial", style='', size=8.5)
+
+    # Define text with hyperlinks
+    text1 = "This report was auto-generated with the "
+    link_text1 = "FreeCAD Beginner Assistant"
+    text2 = "."
+    link1 = "https://github.com/alekssadowski95/FreeCAD-Beginner-Assistant/tree/main"
+
+    # Add text with hyperlink for the first line
+    freecad_report_pdf.write(6, text1)
+    freecad_report_pdf.set_text_color(0, 0, 255)  # Blue color for the link text
+    link1_id = freecad_report_pdf.add_link()
+    freecad_report_pdf.write(6, link_text1, link1)
+    freecad_report_pdf.set_text_color(0, 0, 0)  # Reset color to black
+    freecad_report_pdf.write(6, text2)
+    freecad_report_pdf.ln(6)
+
+    freecad_report_pdf.cell(200, 6, txt="Do you like getting automatic feedback while working with FreeCAD? Help us improve the project.", ln=True, align='L')
+
+    return freecad_report_pdf
+
 def add(a, b):
     """Return the sum of two numbers."""
     return a + b
@@ -131,30 +159,8 @@ def freecad_assistant_pdf_report(freecad_report_dict):
     # Add Space
     pdf.ln(10)
 
-    # Add Owl mascot
-    pdf.image("./tests/test-images/owl-2.png", x=10, y=240, w=20)
-
     # Footer Text
-    pdf.ln(50)
-
-    pdf.set_font("Arial", style='', size=8.5)
-
-    # Define text with hyperlinks
-    text1 = "This report was auto-generated with the "
-    link_text1 = "FreeCAD Beginner Assistant"
-    text2 = "."
-    link1 = "https://github.com/alekssadowski95/FreeCAD-Beginner-Assistant/tree/main"
-
-    # Add text with hyperlink for the first line
-    pdf.write(6, text1)
-    pdf.set_text_color(0, 0, 255)  # Blue color for the link text
-    link1_id = pdf.add_link()
-    pdf.write(6, link_text1, link1)
-    pdf.set_text_color(0, 0, 0)  # Reset color to black
-    pdf.write(6, text2)
-    pdf.ln(6)
-
-    pdf.cell(200, 6, txt="Do you like getting automatic feedback while working with FreeCAD? Help us improve the project.", ln=True, align='L')
+    pdf = freecad_assistant_pdf_report_footer(pdf)
 
     # Save the PDF with name .pdf
     pdf.output("example.pdf")
