@@ -1,5 +1,18 @@
 from fpdf import FPDF
 
+def freecad_assistant_pdf_report_header(freecad_report_pdf):
+
+    # Title Main Text
+    freecad_report_pdf.set_font("Arial", style='B', size=21)
+    freecad_report_pdf.cell(200, 10, txt="Report", ln=True, align='L')
+
+    # Title subtext
+    freecad_report_pdf.set_font("Arial", style='', size=8.5)
+    freecad_report_pdf.set_text_color(128, 128, 128)
+    freecad_report_pdf.cell(200, 5, txt="FreeCAD Beginner Assistant", ln=True, align='L')
+
+    return freecad_report_pdf
+
 def add(a, b):
     """Return the sum of two numbers."""
     return a + b
@@ -13,14 +26,8 @@ def freecad_assistant_pdf_report(freecad_report_dict):
     # Add a page
     pdf.add_page()
 
-    # Title
-    pdf.set_font("Arial", style='B', size=21)
-    pdf.cell(200, 10, txt="Report", ln=True, align='L')
-
-    # Title subtext
-    pdf.set_font("Arial", style='', size=8.5)
-    pdf.set_text_color(128, 128, 128)
-    pdf.cell(200, 5, txt="FreeCAD Beginner Assistant", ln=True, align='L')
+    # Add Report Header
+    pdf = freecad_assistant_pdf_report_header(pdf)
 
     # FreeCAD Model Image
     pdf.image("./tests/test-images/freecad_model_test_file.png", x=10, y=20, w=200)
