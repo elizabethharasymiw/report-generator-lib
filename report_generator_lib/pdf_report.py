@@ -65,10 +65,10 @@ def freecad_assistant_pdf_report_table(freecad_report_pdf):
 
     # Define the data for the table
     rows = [
-        ["1", "R 1, D 2", "R 1, D 3", "R 1, D 4", "R 1, D 5"],
-        ["2", "R 2, D 2", "R 2, D 3", "R 2, D 4", "R 2, D 5"],
-        ["3", "R 3, D 2", "R 3, D 3", "R 3, D 4", "R 3, D 5"],
-        ["4", "R 4, D 2", "R 4, D 3", "R 4, D 4", "R 4, D 5"]
+        ["1", "R 1, D 2", "R 1, D 3", "R 1, D 4", "Passed"],
+        ["2", "R 2, D 2", "R 2, D 3", "R 2, D 4", "Passed"],
+        ["3", "R 3, D 2", "R 3, D 3", "R 3, D 4", "Passed"],
+        ["4", "R 4, D 2", "R 4, D 3", "R 4, D 4", "Failed"]
     ]
 
     # Add table rows
