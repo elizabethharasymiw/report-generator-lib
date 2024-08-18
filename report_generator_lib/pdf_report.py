@@ -24,34 +24,6 @@ def freecad_assistant_pdf_report_summary_text(freecad_report_pdf):
     return freecad_report_pdf
 
 def freecad_assistant_pdf_report_table(freecad_report_pdf):
-    # Define the hardcoded dictionary
-    data = {
-        "Column 1": "Row 1, Data 1",
-        "Column 1": "Row 2, Data 1",
-        "Column 1": "Row 3, Data 1",
-        "Column 1": "Row 4, Data 1",
-
-        "Column 2": "Row 1, Data 2",
-        "Column 2": "Row 2, Data 2",
-        "Column 2": "Row 3, Data 2",
-        "Column 2": "Row 4, Data 2",
-
-        "Column 3": "Row 1, Data 3",
-        "Column 3": "Row 2, Data 3",
-        "Column 3": "Row 3, Data 3",
-        "Column 3": "Row 4, Data 3",
-
-        "Column 4": "Row 1, Data 4",
-        "Column 4": "Row 2, Data 4",
-        "Column 4": "Row 3, Data 4",
-        "Column 4": "Row 4, Data 4",
-
-        "Column 5": "Row 1, Data 5",
-        "Column 5": "Row 2, Data 5",
-        "Column 5": "Row 3, Data 5",
-        "Column 5": "Row 4, Data 5"
-    }
-
     # Define table header colors and set font
     freecad_report_pdf.set_fill_color(0, 0, 128)  # Dark blue
     freecad_report_pdf.set_text_color(255, 255, 255)  # White
