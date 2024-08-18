@@ -29,12 +29,23 @@ def freecad_assistant_pdf_report_table(freecad_report_pdf):
     freecad_report_pdf.set_text_color(255, 255, 255)  # White
     freecad_report_pdf.set_font("Arial", style='B', size=12)
 
-    # Define column width and height
+    table_width = freecad_report_pdf.w - (2 * ONE_INCH_MARGIN_SIZE)
+
     num_cols = 5;
-    col_width = freecad_report_pdf.w / ( num_cols + .5)
-    id_col_width = col_width / 4
-    status_col_width = col_width / 2
-    text_col_width = col_width + (id_col_width/2) + (status_col_width/2)
+
+    all_equal_col_width = table_width / num_cols
+
+    id_col_width = all_equal_col_width * (1/4)
+    id_col_neg_space = all_equal_col_width - id_col_width
+
+    status_col_width = all_equal_col_width * (2/3)
+    status_col_neg_space = all_equal_col_width - status_col_width
+
+    custom_col_width_count = 2;
+    equal_col_count = num_cols - custom_col_width_count
+    total_neg_space = id_col_neg_space + status_col_neg_space
+    text_col_width = all_equal_col_width + total_neg_space/equal_col_count
+
     row_height = 10
 
     # Add table header (using keys from the first item)
