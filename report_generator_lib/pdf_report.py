@@ -105,7 +105,7 @@ def freecad_assistant_pdf_report_table(freecad_report_pdf):
 
 def freecad_assistant_pdf_report_footer(freecad_report_pdf):
     # Add Owl mascot
-    freecad_report_pdf.image("./tests/test-images/owl-2.png", x=ONE_INCH_MARGIN_SIZE, y=230, w=20)
+    freecad_report_pdf.image("./tests/test-images/owl-2.png", x=ONE_INCH_MARGIN_SIZE, y=freecad_report_pdf.y, w=20)
 
     # Add Space
     freecad_report_pdf.ln(50)
@@ -154,7 +154,7 @@ def freecad_assistant_pdf_report(freecad_report_dict):
     pdf = freecad_assistant_pdf_report_header(pdf)
 
     # FreeCAD Model Image
-    pdf.image("./tests/test-images/freecad_model_test_file.png", x=ONE_INCH_MARGIN_SIZE, y=30, w=(pdf.w - (2 * ONE_INCH_MARGIN_SIZE)))
+    pdf.image("./tests/test-images/freecad_model_test_file.png", x=ONE_INCH_MARGIN_SIZE, y=pdf.y, w=(pdf.w - (2 * ONE_INCH_MARGIN_SIZE)))
 
     # Add Space
     pdf.ln(80)
