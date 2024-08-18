@@ -153,11 +153,14 @@ def freecad_assistant_pdf_report(freecad_report_dict):
     # Add Report Header
     pdf = freecad_assistant_pdf_report_header(pdf)
 
+    # Add Space
+    pdf.ln(10)
+
     # FreeCAD Model Image
     pdf.image("./tests/test-images/freecad_model_test_file.png", x=ONE_INCH_MARGIN_SIZE, y=pdf.y, w=(pdf.w - (2 * ONE_INCH_MARGIN_SIZE)))
 
     # Add Space
-    pdf.ln(80)
+    pdf.ln(90)
 
     # Points, Rank, Date, File
     pdf = freecad_assistant_pdf_report_summary_text(pdf)
