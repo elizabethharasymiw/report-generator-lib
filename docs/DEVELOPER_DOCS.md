@@ -22,3 +22,7 @@ pip install .
 # List current python packages in this virtual environment
 pip list
 ```
+```
+# Save the current versions of all packages in the current environment
+pip freeze > requirements.txt
+```
