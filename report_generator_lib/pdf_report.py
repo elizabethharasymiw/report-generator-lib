@@ -24,66 +24,69 @@ def freecad_assistant_pdf_report_summary_text(freecad_report_pdf):
     return freecad_report_pdf
 
 def freecad_assistant_pdf_report_table(freecad_report_pdf):
-    # Define table header colors and set font
-    freecad_report_pdf.set_fill_color(0, 0, 128)  # Dark blue
-    freecad_report_pdf.set_text_color(255, 255, 255)  # White
-    freecad_report_pdf.set_font("Arial", style='B', size=12)
-
     table_width = freecad_report_pdf.w - (2 * ONE_INCH_MARGIN_SIZE)
-
     num_cols = 5;
-
+    row_height = 10
     all_equal_col_width = table_width / num_cols
 
+    # Custom column variables
     id_col_width = all_equal_col_width * (1/4)
     id_col_neg_space = all_equal_col_width - id_col_width
-
     status_col_width = all_equal_col_width * (2/3)
     status_col_neg_space = all_equal_col_width - status_col_width
-
-    custom_col_width_count = 2;
-    equal_col_count = num_cols - custom_col_width_count
     total_neg_space = id_col_neg_space + status_col_neg_space
+    custom_col_width_count = 2;
+
+    # Text column variables
+    equal_col_count = num_cols - custom_col_width_count
     text_col_width = all_equal_col_width + total_neg_space/equal_col_count
 
-    row_height = 10
-
-    # Add table header (using keys from the first item)
-    headers = ["ID", "Text 1", "Text 2", "Text 3", "Status"]
-    for header in headers:
-        col_new_width = text_col_width
-        if(header == "ID"):
-            col_new_width = id_col_width
-        if(header == "Status"):
-            col_new_width = status_col_width
-        freecad_report_pdf.cell(col_new_width, row_height, header, border=1, align='C', fill=True)
-    freecad_report_pdf.ln(row_height)
-
-    # Reset font and text color for table body
-    freecad_report_pdf.set_font("Arial", size=12, style='')
-    freecad_report_pdf.set_text_color(0, 0, 0)  # Black
-
-    # Define the data for the table
-    rows = [
-        ["1", "R 1, D 2", "R 1, D 3", "R 1, D 4", "Passed"],
-        ["2", "R 2, D 2", "R 2, D 3", "R 2, D 4", "Passed"],
-        ["3", "R 3, D 2", "R 3, D 3", "R 3, D 4", "Passed"],
-        ["4", "R 4, D 2", "R 4, D 3", "R 4, D 4", "Failed"]
+    cols = [
+        ["ID        ","1","2","3","4"],
+        ["What the user has done                              ","12", "22", "32", "42"],
+        ["What negative (and positive) effect that has", "13", "23", "33", "43"],
+        ["How to resolve the issue                            ", "14", "24", "34", "44"],
+        ["Status                           ", "Passed", "Passed", "Passed", "Passed"]
     ]
 
-    # Add table rows
     i = 0;
-    for row in rows:
-        for item in row:
+    j = 0;
+    saved_page = freecad_report_pdf.page_no
+    saved_x_loc = freecad_report_pdf.x
+    saved_y_loc = freecad_report_pdf.y
+    x_loc_add = 0;
+    for col in cols:
+        col_new_width = text_col_width
+        if(i < 4):
+            freecad_report_pdf.y = saved_y_loc
+        for item in col:
+
+            # Define Text font based on row number
+            if(i == 0): # Header
+                freecad_report_pdf.set_fill_color(0, 0, 200)
+                freecad_report_pdf.set_text_color(0, 0, 0)
+                freecad_report_pdf.set_font("Arial", style='B', size=12)
+            else: # Main Table
+                freecad_report_pdf.set_font("Arial", size=12, style='')
+                freecad_report_pdf.set_text_color(0, 0, 0)
+
             col_new_width = text_col_width
-            if(i == 0):
+            if(j == 0):
                 col_new_width = id_col_width
-            if(i == 4):
+            if(j == 4):
                 col_new_width = status_col_width
-            freecad_report_pdf.cell(col_new_width, row_height, item, border=1, align='L')
-            i = i + 1;
-        freecad_report_pdf.ln(row_height)
+
+            # Set cursor back to top of table
+            freecad_report_pdf.page_no = saved_page
+            freecad_report_pdf.x = freecad_report_pdf.x + x_loc_add
+
+            freecad_report_pdf.multi_cell(col_new_width, row_height, item, border=1, align='L')
+            i = i + 1
+
+        x_loc_add = x_loc_add + col_new_width
         i = 0
+        j = j + 1
+
     return freecad_report_pdf
 
 def freecad_assistant_pdf_report_footer(freecad_report_pdf):
