@@ -49,11 +49,41 @@ def freecad_assistant_pdf_report_table(freecad_report_pdf):
             "How to resolve the issue",
             "Status"
         ),
-        ("1", "12", "22", "32", "Passed"),
-        ("2", "13", "23", "33", "Passed"),
-        ("3", "14", "24", "34", "Passed"),
-        ("4", "15", "25", "35", "Passed"),
-        ("5", "16", "26", "36", "Passed"),
+        (
+            "1",
+            "You have referenced a face of your 3D model (topological element) for your sketch.",
+            "This might lead to the sketch losing its reference, when the topological elements change.",
+            "Reference one of the Origin planes or create a new plane, that also only references one of the Origin planes instead.",
+            "Passed"
+        ),
+        (
+            "2",
+            "You have created a sketch, that is under constrained",
+            "This might lead to unexpected behaviour, when you use that sketch for a feature",
+            "Go back to your sketch and fully define it using dimensional of geometrical constraints.",
+            "Passed"
+        ),
+        (
+            "3",
+            "You have created a sketch, that is over constrained",
+            "This might lead to unexpected behaviour, when you use that sketch for a feature",
+            "Go back to your sketch and remove redundant constraints.",
+            "Passed"
+        ),
+        (
+            "4",
+            "Your 3D model is not symmetric in relation to one of the Origin planes",
+            "Designing your 3D model symmetric to as many Origin planes as possible makes it easier to modify it in the future.",
+            "Try to create your 3D model symmetric in relation to as many Origin planes as possible.",
+            "Passed"
+        ),
+        (
+            "5",
+            "You have created a complex sketch that uses a lot of geometrical elements and constraints.",
+            "This might lead to performance issues and make building your 3D model slow.",
+            "Split up your complex sketch into multiple simple sketches if possible.",
+            "Passed"
+        ),
     )
     freecad_report_pdf.set_font("Times", size=16)
     with freecad_report_pdf.table(width=table_width, col_widths=(id_col_width, text_col_width, text_col_width, text_col_width, status_col_width)) as table:
