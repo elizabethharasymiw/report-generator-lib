@@ -88,6 +88,7 @@ def freecad_assistant_pdf_report_table(freecad_report_pdf):
     )
 
     freecad_report_pdf.set_font("Arial", size=10)
+    freecad_report_pdf.set_line_width(0.2)
     light_blue = (216, 226, 243)
     dark_blue = (68, 113, 196)
     white = (255, 255, 255)
@@ -95,6 +96,9 @@ def freecad_assistant_pdf_report_table(freecad_report_pdf):
 
     with freecad_report_pdf.table(
     headings_style=headings_style,
+    repeat_headings=0,
+    text_align="LEFT",
+    line_height= 6,
     cell_fill_color=light_blue, cell_fill_mode="ROWS",
     width=table_width,
     col_widths=(id_col_width, text_col_width, text_col_width, text_col_width, status_col_width)
