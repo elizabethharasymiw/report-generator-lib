@@ -1,5 +1,4 @@
-# 1 inch = 25.4 mm
-ONE_INCH = 25.4
+ONE_INCH = 25.4 # millimeters
 
 from fpdf import FPDF
 from fpdf.fonts import FontFace
@@ -14,17 +13,37 @@ def freecad_assistant_pdf_report_header(freecad_report_pdf):
     freecad_report_pdf.cell(200, 5, txt="FreeCAD Beginner Assistant", ln=True, align='L')
     return freecad_report_pdf
 
-def freecad_assistant_pdf_report_summary_text(freecad_report_pdf):
+def freecad_assistant_pdf_report_summary_text(freecad_report_pdf, filename, run_date, rank, points_got, points_max):
     freecad_report_pdf.set_text_color(0, 0, 0)
     freecad_report_pdf.set_font("Arial", style='', size=13.5)
-    freecad_report_pdf.cell(200, 8, txt="Points: 14 / 21", ln=True, align='L')
-    freecad_report_pdf.cell(200, 8, txt="Rank: Bronze", ln=True, align='L')
+    freecad_report_pdf.cell(200, 8, txt="Points: " + points_got + " / " + points_max, ln=True, align='L')
+    freecad_report_pdf.cell(200, 8, txt="Rank: " + rank, ln=True, align='L')
     freecad_report_pdf.set_font("Arial", style='', size=8.5)
-    freecad_report_pdf.cell(200, 6, txt="Date: 01.01.2024", ln=True, align='L')
-    freecad_report_pdf.cell(200, 6, txt="File: test_file.FCStd", ln=True, align='L')
+    freecad_report_pdf.cell(200, 6, txt="Date: " + run_date, ln=True, align='L')
+    freecad_report_pdf.cell(200, 6, txt="File: " + filename, ln=True, align='L')
     return freecad_report_pdf
 
-def freecad_assistant_pdf_report_table(freecad_report_pdf):
+def freecad_assistant_convert_dict_data_to_array_data(freecad_best_practices_dict):
+    freecad_report_table_array = [( # Header
+        "ID",
+        "What the user has done",
+        "What negative (and positive) effect that has",
+        "How to resolve the issue",
+        "Status"
+    ),]
+
+    for item in freecad_best_practices_dict:
+        freecad_report_table_array.append((
+            str(item["id"]),
+            item["action"],
+            item["effect"],
+            item["solution"],
+            item["status"]
+        ))
+
+    return freecad_report_table_array
+
+def freecad_assistant_pdf_report_table(freecad_report_pdf, freecad_report_table_array):
     table_width = freecad_report_pdf.w - (2 * ONE_INCH)
     num_cols = 5;
     row_height = 10
@@ -42,51 +61,6 @@ def freecad_assistant_pdf_report_table(freecad_report_pdf):
     equal_col_count = num_cols - custom_col_width_count
     text_col_width = all_equal_col_width + total_neg_space/equal_col_count
 
-    TABLE_DATA = (
-        ( # Row 1, Header
-            "ID",
-            "What the user has done",
-            "What negative (and positive) effect that has",
-            "How to resolve the issue",
-            "Status"
-        ),
-        (
-            "1",
-            "You have referenced a face of your 3D model (topological element) for your sketch.",
-            "This might lead to the sketch losing its reference, when the topological elements change.",
-            "Reference one of the Origin planes or create a new plane, that also only references one of the Origin planes instead.",
-            "Passed"
-        ),
-        (
-            "2",
-            "You have created a sketch, that is under constrained",
-            "This might lead to unexpected behaviour, when you use that sketch for a feature",
-            "Go back to your sketch and fully define it using dimensional of geometrical constraints.",
-            "Passed"
-        ),
-        (
-            "3",
-            "You have created a sketch, that is over constrained",
-            "This might lead to unexpected behaviour, when you use that sketch for a feature",
-            "Go back to your sketch and remove redundant constraints.",
-            "Passed"
-        ),
-        (
-            "4",
-            "Your 3D model is not symmetric in relation to one of the Origin planes",
-            "Designing your 3D model symmetric to as many Origin planes as possible makes it easier to modify it in the future.",
-            "Try to create your 3D model symmetric in relation to as many Origin planes as possible.",
-            "Passed"
-        ),
-        (
-            "5",
-            "You have created a complex sketch that uses a lot of geometrical elements and constraints.",
-            "This might lead to performance issues and make building your 3D model slow.",
-            "Split up your complex sketch into multiple simple sketches if possible.",
-            "Passed"
-        ),
-    )
-
     freecad_report_pdf.set_font("Arial", size=10)
     freecad_report_pdf.set_line_width(0.2)
     light_blue = (216, 226, 243)
@@ -103,7 +77,7 @@ def freecad_assistant_pdf_report_table(freecad_report_pdf):
     width=table_width,
     col_widths=(id_col_width, text_col_width, text_col_width, text_col_width, status_col_width)
     ) as table:
-        for data_row in TABLE_DATA:
+        for data_row in freecad_report_table_array:
             row = table.row()
             for datum in data_row:
                 row.cell(datum)
@@ -145,7 +119,14 @@ def add(a, b):
 # Takes in a formatted dict to generate a FreeCAD assistant PDF report.
 # <Insert link to markdown that defined the dict format>
 def freecad_assistant_pdf_report(freecad_report_dict):
-    # Create instance of FPDF class
+    run_date = freecad_report_dict["date"]
+    filename = freecad_report_dict["file"]
+    model_image_loc = freecad_report_dict["screenshot"]
+    points_got = freecad_report_dict["pts-reached"]
+    points_max= freecad_report_dict["pts-available"]
+    rank = freecad_report_dict["rank"]
+    freecad_report_table_array = freecad_assistant_convert_dict_data_to_array_data(freecad_report_dict["best-practices"])
+
     pdf = FPDF()
 
     pdf.set_left_margin(ONE_INCH)
@@ -156,13 +137,13 @@ def freecad_assistant_pdf_report(freecad_report_dict):
     pdf.add_page()
 
     pdf = freecad_assistant_pdf_report_header(pdf) # Header
-    pdf.ln(10) # Add Space
-    pdf.image("./tests/test-images/freecad_model_test_file.png", x=ONE_INCH, y=pdf.y, w=(pdf.w - (2 * ONE_INCH)))
-    pdf.ln(90) # Add Space
-    pdf = freecad_assistant_pdf_report_summary_text(pdf) # Points, Rank, Date, File
-    pdf.ln(10) # Add Space
-    pdf = freecad_assistant_pdf_report_table(pdf) # Table
-    pdf.ln(10) # Add Space
+    pdf.ln(10) # Add Space in millimeters
+    pdf.image("./tests/test-images/" + model_image_loc, x=ONE_INCH, y=pdf.y, w=(pdf.w - (2 * ONE_INCH)))
+    pdf.ln(90) # Add Space in millimeters
+    pdf = freecad_assistant_pdf_report_summary_text(pdf, filename, run_date, rank, points_got, points_max)
+    pdf.ln(10) # Add Space in millimeters
+    pdf = freecad_assistant_pdf_report_table(pdf, freecad_report_table_array) # Table
+    pdf.ln(10) # Add Space in millimeters
     pdf = freecad_assistant_pdf_report_footer(pdf) # Footer
 
     pdf.output("example.pdf") # Save the PDF
