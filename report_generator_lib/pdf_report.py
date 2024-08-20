@@ -41,51 +41,26 @@ def freecad_assistant_pdf_report_table(freecad_report_pdf):
     equal_col_count = num_cols - custom_col_width_count
     text_col_width = all_equal_col_width + total_neg_space/equal_col_count
 
-    cols = [
-        ["ID          ","1","2","3","4","5","6","7"],
-        ["What the user has done                              ","12", "22", "32", "42", "52", "62", "72"],
-        ["What negative (and positive) effect that has", "13", "23", "33", "43", "53", "63", "73"],
-        ["How to resolve the issue                            ", "14", "24", "34", "44", "54", "64", "74"],
-        ["Status                           ", "Passed", "Passed", "Passed", "Passed", "Failed", "Failed", "Failed"]
-    ]
-
-    i = 0;
-    j = 0;
-    saved_x_loc = freecad_report_pdf.x
-    saved_y_loc = freecad_report_pdf.y
-    x_loc_add = 0;
-    for col in cols:
-        col_new_width = text_col_width
-        freecad_report_pdf.y = saved_y_loc
-
-        for item in col:
-
-            # Define Text font based on row number
-            if(i == 0): # Header
-                freecad_report_pdf.set_fill_color(0, 0, 200)
-                freecad_report_pdf.set_text_color(0, 0, 0)
-                freecad_report_pdf.set_font("Arial", style='B', size=12)
-            else: # Main Table
-                freecad_report_pdf.set_font("Arial", size=12, style='')
-                freecad_report_pdf.set_text_color(0, 0, 0)
-
-            col_new_width = text_col_width
-            if(j == 0):
-                col_new_width = id_col_width
-            if(j == 4):
-                col_new_width = status_col_width
-
-            # Set cursor back to top of table
-            freecad_report_pdf.x = freecad_report_pdf.x - x_loc_add
-
-            freecad_report_pdf.multi_cell(col_new_width, row_height, item, border=1, align='L')
-
-            x_loc_add = col_new_width
-            i = i + 1
-
-        freecad_report_pdf.x = freecad_report_pdf.x + col_new_width
-        i = 0
-        j = j + 1
+    TABLE_DATA = (
+        ( # Row 1, Header
+            "ID",
+            "What the user has done",
+            "What negative (and positive) effect that has",
+            "How to resolve the issue",
+            "Status"
+        ),
+        ("1", "12", "22", "32", "Passed"),
+        ("2", "13", "23", "33", "Passed"),
+        ("3", "14", "24", "34", "Passed"),
+        ("4", "15", "25", "35", "Passed"),
+        ("5", "16", "26", "36", "Passed"),
+    )
+    freecad_report_pdf.set_font("Times", size=16)
+    with freecad_report_pdf.table(width=table_width, col_widths=(id_col_width, text_col_width, text_col_width, text_col_width, status_col_width)) as table:
+        for data_row in TABLE_DATA:
+            row = table.row()
+            for datum in data_row:
+                row.cell(datum)
 
     return freecad_report_pdf
 
