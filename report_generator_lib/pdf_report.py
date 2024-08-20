@@ -148,41 +148,21 @@ def freecad_assistant_pdf_report(freecad_report_dict):
     # Create instance of FPDF class
     pdf = FPDF()
 
-    # Set 1 inch page margins
     pdf.set_left_margin(ONE_INCH)
     pdf.set_right_margin(ONE_INCH)
     pdf.set_top_margin(ONE_INCH)
     pdf.set_auto_page_break(auto=True, margin=ONE_INCH)
 
-    # Add a page
     pdf.add_page()
 
-    # Add Report Header
-    pdf = freecad_assistant_pdf_report_header(pdf)
-
-    # Add Space
-    pdf.ln(10)
-
-    # FreeCAD Model Image
+    pdf = freecad_assistant_pdf_report_header(pdf) # Header
+    pdf.ln(10) # Add Space
     pdf.image("./tests/test-images/freecad_model_test_file.png", x=ONE_INCH, y=pdf.y, w=(pdf.w - (2 * ONE_INCH)))
+    pdf.ln(90) # Add Space
+    pdf = freecad_assistant_pdf_report_summary_text(pdf) # Points, Rank, Date, File
+    pdf.ln(10) # Add Space
+    pdf = freecad_assistant_pdf_report_table(pdf) # Table
+    pdf.ln(10) # Add Space
+    pdf = freecad_assistant_pdf_report_footer(pdf) # Footer
 
-    # Add Space
-    pdf.ln(90)
-
-    # Points, Rank, Date, File
-    pdf = freecad_assistant_pdf_report_summary_text(pdf)
-
-    # Add Space
-    pdf.ln(10)
-
-    # Table
-    pdf = freecad_assistant_pdf_report_table(pdf)
-
-    # Add Space
-    pdf.ln(10)
-
-    # Footer Text
-    pdf = freecad_assistant_pdf_report_footer(pdf)
-
-    # Save the PDF with name .pdf
-    pdf.output("example.pdf")
+    pdf.output("example.pdf") # Save the PDF
