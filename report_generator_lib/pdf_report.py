@@ -1,5 +1,5 @@
 # 1 inch = 25.4 mm
-ONE_INCH_MARGIN_SIZE = 25.4
+ONE_INCH = 25.4
 
 from fpdf import FPDF
 from fpdf.fonts import FontFace
@@ -25,7 +25,7 @@ def freecad_assistant_pdf_report_summary_text(freecad_report_pdf):
     return freecad_report_pdf
 
 def freecad_assistant_pdf_report_table(freecad_report_pdf):
-    table_width = freecad_report_pdf.w - (2 * ONE_INCH_MARGIN_SIZE)
+    table_width = freecad_report_pdf.w - (2 * ONE_INCH)
     num_cols = 5;
     row_height = 10
     all_equal_col_width = table_width / num_cols
@@ -112,7 +112,7 @@ def freecad_assistant_pdf_report_table(freecad_report_pdf):
 
 def freecad_assistant_pdf_report_footer(freecad_report_pdf):
     # Add Owl mascot
-    freecad_report_pdf.image("./tests/test-images/owl-2.png", x=ONE_INCH_MARGIN_SIZE, y=freecad_report_pdf.y, w=20)
+    freecad_report_pdf.image("./tests/test-images/owl-2.png", x=ONE_INCH, y=freecad_report_pdf.y, w=20)
 
     # Add Space
     freecad_report_pdf.ln(50)
@@ -149,10 +149,10 @@ def freecad_assistant_pdf_report(freecad_report_dict):
     pdf = FPDF()
 
     # Set 1 inch page margins
-    pdf.set_left_margin(ONE_INCH_MARGIN_SIZE)
-    pdf.set_right_margin(ONE_INCH_MARGIN_SIZE)
-    pdf.set_top_margin(ONE_INCH_MARGIN_SIZE)
-    pdf.set_auto_page_break(auto=True, margin=ONE_INCH_MARGIN_SIZE)
+    pdf.set_left_margin(ONE_INCH)
+    pdf.set_right_margin(ONE_INCH)
+    pdf.set_top_margin(ONE_INCH)
+    pdf.set_auto_page_break(auto=True, margin=ONE_INCH)
 
     # Add a page
     pdf.add_page()
@@ -164,7 +164,7 @@ def freecad_assistant_pdf_report(freecad_report_dict):
     pdf.ln(10)
 
     # FreeCAD Model Image
-    pdf.image("./tests/test-images/freecad_model_test_file.png", x=ONE_INCH_MARGIN_SIZE, y=pdf.y, w=(pdf.w - (2 * ONE_INCH_MARGIN_SIZE)))
+    pdf.image("./tests/test-images/freecad_model_test_file.png", x=ONE_INCH, y=pdf.y, w=(pdf.w - (2 * ONE_INCH)))
 
     # Add Space
     pdf.ln(90)
