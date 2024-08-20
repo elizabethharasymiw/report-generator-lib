@@ -4,13 +4,13 @@ from fpdf import FPDF
 from fpdf.fonts import FontFace
 
 def freecad_assistant_pdf_report_header(freecad_report_pdf):
-    # Title Main Text
     freecad_report_pdf.set_font("Arial", style='B', size=21)
     freecad_report_pdf.cell(200, 10, txt="Report", ln=True, align='L')
-    # Title subtext
+
     freecad_report_pdf.set_font("Arial", style='', size=8.5)
     freecad_report_pdf.set_text_color(128, 128, 128)
     freecad_report_pdf.cell(200, 5, txt="FreeCAD Beginner Assistant", ln=True, align='L')
+
     return freecad_report_pdf
 
 def freecad_assistant_pdf_report_summary_text(freecad_report_pdf, filename, run_date, rank, points_got, points_max):
@@ -18,9 +18,11 @@ def freecad_assistant_pdf_report_summary_text(freecad_report_pdf, filename, run_
     freecad_report_pdf.set_font("Arial", style='', size=13.5)
     freecad_report_pdf.cell(200, 8, txt="Points: " + points_got + " / " + points_max, ln=True, align='L')
     freecad_report_pdf.cell(200, 8, txt="Rank: " + rank, ln=True, align='L')
+
     freecad_report_pdf.set_font("Arial", style='', size=8.5)
     freecad_report_pdf.cell(200, 6, txt="Date: " + run_date, ln=True, align='L')
     freecad_report_pdf.cell(200, 6, txt="File: " + filename, ln=True, align='L')
+
     return freecad_report_pdf
 
 def freecad_assistant_convert_dict_data_to_array_data(freecad_best_practices_dict):
@@ -85,11 +87,9 @@ def freecad_assistant_pdf_report_table(freecad_report_pdf, freecad_report_table_
     return freecad_report_pdf
 
 def freecad_assistant_pdf_report_footer(freecad_report_pdf):
-    # Add Owl mascot
     freecad_report_pdf.image("./tests/test-images/owl-2.png", x=ONE_INCH, y=freecad_report_pdf.y, w=20)
 
-    # Add Space
-    freecad_report_pdf.ln(50)
+    freecad_report_pdf.ln(50) # Add Space in millimeters
 
     freecad_report_pdf.set_font("Arial", style='', size=8.5)
 
@@ -117,7 +117,6 @@ def add(a, b):
     return a + b
 
 # Takes in a formatted dict to generate a FreeCAD assistant PDF report.
-# <Insert link to markdown that defined the dict format>
 def freecad_assistant_pdf_report(freecad_report_dict):
     run_date = freecad_report_dict["date"]
     filename = freecad_report_dict["file"]
