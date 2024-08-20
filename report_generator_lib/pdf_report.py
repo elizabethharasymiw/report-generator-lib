@@ -42,23 +42,22 @@ def freecad_assistant_pdf_report_table(freecad_report_pdf):
     text_col_width = all_equal_col_width + total_neg_space/equal_col_count
 
     cols = [
-        ["ID        ","1","2","3","4"],
-        ["What the user has done                              ","12", "22", "32", "42"],
-        ["What negative (and positive) effect that has", "13", "23", "33", "43"],
-        ["How to resolve the issue                            ", "14", "24", "34", "44"],
-        ["Status                           ", "Passed", "Passed", "Passed", "Passed"]
+        ["ID          ","1","2","3","4","5","6","7"],
+        ["What the user has done                              ","12", "22", "32", "42", "52", "62", "72"],
+        ["What negative (and positive) effect that has", "13", "23", "33", "43", "53", "63", "73"],
+        ["How to resolve the issue                            ", "14", "24", "34", "44", "54", "64", "74"],
+        ["Status                           ", "Passed", "Passed", "Passed", "Passed", "Failed", "Failed", "Failed"]
     ]
 
     i = 0;
     j = 0;
-    saved_page = freecad_report_pdf.page_no
     saved_x_loc = freecad_report_pdf.x
     saved_y_loc = freecad_report_pdf.y
     x_loc_add = 0;
     for col in cols:
         col_new_width = text_col_width
-        if(i < 4):
-            freecad_report_pdf.y = saved_y_loc
+        freecad_report_pdf.y = saved_y_loc
+
         for item in col:
 
             # Define Text font based on row number
@@ -77,13 +76,14 @@ def freecad_assistant_pdf_report_table(freecad_report_pdf):
                 col_new_width = status_col_width
 
             # Set cursor back to top of table
-            freecad_report_pdf.page_no = saved_page
-            freecad_report_pdf.x = freecad_report_pdf.x + x_loc_add
+            freecad_report_pdf.x = freecad_report_pdf.x - x_loc_add
 
             freecad_report_pdf.multi_cell(col_new_width, row_height, item, border=1, align='L')
+
+            x_loc_add = col_new_width
             i = i + 1
 
-        x_loc_add = x_loc_add + col_new_width
+        freecad_report_pdf.x = freecad_report_pdf.x + col_new_width
         i = 0
         j = j + 1
 
