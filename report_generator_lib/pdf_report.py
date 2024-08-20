@@ -30,7 +30,7 @@ def freecad_assistant_pdf_report_table(freecad_report_pdf):
     all_equal_col_width = table_width / num_cols
 
     # Custom column variables
-    id_col_width = all_equal_col_width * (1/4)
+    id_col_width = all_equal_col_width * (1/3)
     id_col_neg_space = all_equal_col_width - id_col_width
     status_col_width = all_equal_col_width * (2/3)
     status_col_neg_space = all_equal_col_width - status_col_width
