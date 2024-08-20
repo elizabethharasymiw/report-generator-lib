@@ -2,6 +2,7 @@
 ONE_INCH_MARGIN_SIZE = 25.4
 
 from fpdf import FPDF
+from fpdf.fonts import FontFace
 
 def freecad_assistant_pdf_report_header(freecad_report_pdf):
     # Title Main Text
@@ -85,8 +86,19 @@ def freecad_assistant_pdf_report_table(freecad_report_pdf):
             "Passed"
         ),
     )
-    freecad_report_pdf.set_font("Times", size=16)
-    with freecad_report_pdf.table(width=table_width, col_widths=(id_col_width, text_col_width, text_col_width, text_col_width, status_col_width)) as table:
+
+    freecad_report_pdf.set_font("Arial", size=10)
+    light_blue = (216, 226, 243)
+    dark_blue = (68, 113, 196)
+    white = (255, 255, 255)
+    headings_style = FontFace(emphasis="BOLD", color=white, fill_color=dark_blue)
+
+    with freecad_report_pdf.table(
+    headings_style=headings_style,
+    cell_fill_color=light_blue, cell_fill_mode="ROWS",
+    width=table_width,
+    col_widths=(id_col_width, text_col_width, text_col_width, text_col_width, status_col_width)
+    ) as table:
         for data_row in TABLE_DATA:
             row = table.row()
             for datum in data_row:
