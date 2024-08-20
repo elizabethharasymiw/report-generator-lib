@@ -172,6 +172,9 @@ def freecad_assistant_pdf_report(freecad_report_dict):
     # Points, Rank, Date, File
     pdf = freecad_assistant_pdf_report_summary_text(pdf)
 
+    # Add Space
+    pdf.ln(10)
+
     # Table
     pdf = freecad_assistant_pdf_report_table(pdf)
 
